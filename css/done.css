@@ -1,0 +1,9 @@
+body, html {
+	height: 100%;
+}
+
+.result-box {
+	background-color: #54556E !important;
+	font-family: monospace;
+	color: #fff !important;
+}

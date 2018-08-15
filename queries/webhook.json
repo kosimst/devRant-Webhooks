@@ -1,0 +1,7 @@
+{
+	"create": "INSERT INTO drw_webhooks (webhookKey, eventType, url, method, contentType, body, eventData) VALUES ('{key}', '{eventType}', '{url}', '{method}', '{contentType}', '{body}', '{eventData}')",
+	"update": "UPDATE drw_webhooks SET eventType='{eventType}', url='{url}', method='{method}', contentType='{contentType}', body='{body}', eventData='{eventData}' WHERE webhookKey='{key}'",
+	"deleteLog": "DELETE FROM drw_log WHERE webhookKey='{key}'",
+	"delete": "DELETE FROM drw_webhooks WHERE webhookKey='{key}'",
+	"get": "SELECT * FROM drw_webhooks WHERE webhookKey='{key}'"
+}

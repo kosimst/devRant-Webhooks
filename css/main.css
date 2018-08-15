@@ -1,0 +1,101 @@
+body {
+	background-image: url(/images/header-background.png);
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+.columns-overlay {
+	background: #e6c653 !important;
+	height: 100% !important;
+	width: 100% !important;
+	z-index: 0 !important;
+	top: 0px !important;
+	left: 0px !important;
+	position: fixed !important;
+	opacity: 0.66 !important;
+}
+
+.page-content-column {
+	margin-top: 50px;
+	margin-bottom: 15px !important;
+	z-index: 2;
+	position: relative;
+}
+
+.page-content-column header .header-title {
+	vertical-align: super;
+	font-family: 'Comfortaa', sans-serif;
+}
+
+.page-content {
+	background-color: #40415a !important;
+	color:            #fff !important;
+}
+
+input, select, textarea {
+	background-color: transparent !important;
+	color:            #fff !important;
+	border-width:     1px !important;
+	border-radius: 3px !important;
+	transition: border-width 0.1s;
+}
+
+select:not(:focus):first-child {
+	color: #fff !important;
+}
+
+select option {
+	color: #000 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+	border-width: 1.5px !important;
+	border-color: #fff !important;
+}
+
+input.is-danger:focus, select.is-danger:focus, textarea.is-danger:focus {
+	border-color: #ff3860 !important;
+}
+
+input[type='submit'], button:not(.is-danger):not(.delete) {
+	background-color: #fff !important;
+	color: #40415a !important;
+	border-radius: 5px !important;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+	border-color: #fff !important;
+}
+
+.field:not(:last-child) {
+	margin-bottom: 1.5rem !important;
+}
+
+#additionalFields {
+	margin-bottom: 20px;
+}
+
+
+/* PLACEHOLDER */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color:    #fff !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    #fff !important;;
+	opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:    #fff !important;;
+	opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color:    #fff !important;;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+	color:    #fff !important;;
+}
+::placeholder { /* Most modern browsers support this now. */
+	color:    #fff !important;;
+}

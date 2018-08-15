@@ -1,0 +1,3 @@
+button[disabled].is-static {
+	opacity: 1 !important;
+}

@@ -1,0 +1,3 @@
+{
+	"get": "SELECT text FROM drw_log WHERE webhookKey='{key}'"
+}
