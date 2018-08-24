@@ -78,7 +78,7 @@ $(document).ready(function () {
 	$('.variables.variables-url').on('click', function(e) {
 		e.preventDefault();
 
-		if($(e.target).hasClass('notVariable'))
+		if(!$(e.target).hasClass('dropdown-item') || $(e.target).hasClass('notVariable'))
 			return;
 
 		$('#url').val($('#url').val() + $(e.target).attr('title'));
@@ -87,7 +87,7 @@ $(document).ready(function () {
 	$('.variables.variables-body').on('click', function(e) {
 		e.preventDefault();
 
-		if($(e.target).hasClass('notVariable'))
+		if(!$(e.target).hasClass('dropdown-item') || $(e.target).hasClass('notVariable'))
 			return;
 
 		$('#body').append($(e.target).attr('title'));
