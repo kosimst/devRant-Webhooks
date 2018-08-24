@@ -20,6 +20,8 @@ define('QUERIES_DIR', 'queries/');
 define('CORE_DIR', 'core/');
 define('LANG_DIR', 'local/');
 
+ini_set('allow_url_fopen', '1');
+require_once ('global.php');
 
 // Run
 require_once CORE_DIR . 'Slid.php';
