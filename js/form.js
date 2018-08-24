@@ -167,7 +167,7 @@ eventTypeElement.addEventListener('change', () => {
                 placeholder="${data.placeholder}"
               >
               <span class="icon is-small is-left has-text-white">
-                <i class="fas fa-${data.icon}></i>
+                <i class="fas fa-${data.icon}"></i>
               </span>
             </div>
             <p class="help ${data.error ? 'is-danger' : ''}">${data.help}</p>
