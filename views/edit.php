@@ -57,16 +57,10 @@
 						</button>
 					</div>
 					<div class="dropdown-menu" role="menu">
-						<div class="dropdown-content">
-							<a href="#" class="dropdown-item">
-								Dropdown item
-							</a>
-							<a class="dropdown-item">
-								Other dropdown item
-							</a>
-							<a href="#" class="dropdown-item">
-								Active dropdown item
-							</a>
+						<div class="dropdown-content variables variables-url">
+							<div class="notVariable dropdown-item has-text-grey">
+								None
+							</div>
 						</div>
 					</div>
 				</div>
@@ -146,16 +140,10 @@
 						</button>
 					</div>
 					<div class="dropdown-menu" role="menu">
-						<div class="dropdown-content">
-							<a href="#" class="dropdown-item">
-								Dropdown item
-							</a>
-							<a class="dropdown-item">
-								Other dropdown item
-							</a>
-							<a href="#" class="dropdown-item">
-								Active dropdown item
-							</a>
+						<div class="dropdown-content variables variables-body">
+							<div class="notVariable dropdown-item has-text-grey">
+								None
+							</div>
 						</div>
 					</div>
 				</div>
