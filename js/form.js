@@ -1,44 +1,79 @@
 // Declaration with let to prevent global
-let eventTypes = {
-  newRant: [
-    {
-      id: 'byUser',
-      name: 'By User',
-      placeholder: 'User(s) ...',
-      help:
-        '(Optional) Execute only when specific user(s) posts a rant. Comma-separate for multiple',
-      icon: 'user',
+const eventTypes = {
+  newRant: {
+    fields: [
+      {
+        id: 'byUser',
+        name: 'By User',
+        placeholder: 'User(s) ...',
+        help:
+          '(Optional) Execute only when specific user(s) posts a rant. Comma-separate for multiple',
+        icon: 'user',
+      },
+      {
+        id: 'withTag',
+        name: 'With Tag',
+        placeholder: 'Tag(s) ...',
+        help:
+          '(Optional) Execute only when rant has specific tag(s). Comma-separate for multiple',
+        icon: 'tag',
+      },
+    ],
+    variables: {
+      'Rant ID': 'id',
+      'Rant Text': 'text',
+      'Rant Score': 'score',
+      'Rant Created Time': 'created_time',
+      'Rant Comments Count': 'num_comments',
+      'Rant is edited': 'edited',
+      'Rant Link': 'link',
+      'Ranter User ID': 'user_id',
+      'Ranter Username': 'user_username',
+      'Ranter Score': 'user_score',
     },
-    {
-      id: 'withTag',
-      name: 'With Tag',
-      placeholder: 'Tag(s) ...',
-      help:
-        '(Optional) Execute only when rant has specific tag(s). Comma-separate for multiple',
-      icon: 'tag',
+  },
+  newCommentOnRant: {
+    fields: [
+      {
+        id: 'rantID',
+        name: 'Rant ID',
+        placeholder: 'Rant ID ...',
+        help: 'The rant ID. (You can find it in the URL)',
+        icon: 'hashtag',
+      },
+      {
+        id: 'byUser',
+        name: 'By User',
+        placeholder: 'User(s) ...',
+        help:
+          '(Optional) Execute only when specific user(s) posts a comment. Comma-separate for multiple',
+        icon: 'user',
+      },
+    ],
+    variables: {
+      'Comment ID': 'id',
+      'Rant ID': 'rant_id',
+      'Comment Body': 'body',
+      'Comment Score': 'score',
+      'Comment Created Timestamp': 'created_time',
+      'Commenter User ID': 'user_id',
+      'Commenter Username': 'user_username',
+      'Commenter Score': 'user_score',
+      'Commenter is Supporter': 'user_dpp',
     },
-  ],
-  newCommentOnRant: [
-    {
-      id: 'rantID',
-      name: 'Rant ID',
-      placeholder: 'Rant ID ...',
-      help: 'The rant ID. (You can find it in the URL)',
-      icon: 'hashtag',
+  },
+  newWeeklyTopic: {
+    fields: [],
+    variables: {
+      Topic: 'prompt',
+      Week: 'week',
+      'Amount of Rants': 'num_rants',
+      Date: 'date',
     },
-    {
-      id: 'byUser',
-      name: 'By User',
-      placeholder: 'User(s) ...',
-      help:
-        '(Optional) Execute only when specific user(s) posts a comment. Comma-separate for multiple',
-      icon: 'user',
-    },
-  ],
-  newWeeklyTopic: [],
+  },
 }
 
-const eventType = document.getElementById('eventType')
+const eventTypeElement = document.getElementById('eventType')
 
 // Vanilla implementation of $(document).ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Use getElementById -> faster and vanilla
   if ('eventType' in previousForm && previousForm.eventType != '') {
-    eventType.value = previousForm.eventType
+    eventTypeElement.value = previousForm.eventType
   }
   if ('method' in previousForm && previousForm.method != '') {
     document.getElementById('method').value = previousForm.method
@@ -55,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('contentType').value = previousForm.contentType
   }
   // Vanilly implementaion of $().trigger
-  eventType.dispatchEvent(new Event('change'))
+  eventTypeElement.dispatchEvent(new Event('change'))
 
   $('.variables.variables-url').on('click', function(e) {
     e.preventDefault()
@@ -87,11 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // Use native event listeners
-eventType.addEventListener('change', event => {
+eventTypeElement.addEventListener('change', () => {
   'use strict'
-
-  // eventTypoe is already declared
-  // var eventType = event.currentTarget.value
 
   // Vanilla $().empty
   const additionalFields = document.getElementById('additionalFields')
@@ -104,13 +136,12 @@ eventType.addEventListener('change', event => {
       '<div class="notVariable dropdown-item has-text-grey">None</div>'
   })
 
-  // Use Array.prototype.includes
-  if (Object.keys(eventTypes).includes(eventType)) {
-    // Important: Always use let in for loops -> scoped!
-    // TODO: Convert to for…of loop -> faster
-    for (let i = 0; i < eventTypes[eventType].length; i++) {
-      const data = eventTypes[eventType][i]
-
+  if (eventTypeElement.value in eventTypes) {
+    const {
+      fields: eventTypeFields,
+      variables: eventTypeVariables,
+    } = eventTypes[eventTypeElement.value]
+    for (const data of eventTypeFields) {
       data.error = false
       if (data.id in errors) {
         data.help = errors[data.id]
@@ -145,10 +176,10 @@ eventType.addEventListener('change', event => {
       </div>
       `
 
-      additionalFields.insertAdjacentHTML('', newField)
+      additionalFields.insertAdjacentHTML('beforeEnd', newField)
     }
 
-    if (Object.keys(eventTypes[eventType].variables).length > 0) {
+    if (Object.keys(eventTypeVariables).length > 0) {
       // Replace jQuery with Array forEach
       variables.forEach(el => {
         el.innerHTML = ''
@@ -156,15 +187,17 @@ eventType.addEventListener('change', event => {
     }
 
     // Use let over var
-    for (let key in eventTypes[eventType].variables) {
+    for (const key in eventTypeVariables) {
       // Use template strings
-      const variable = `{${eventTypes[eventType].variables[key]}}`
+      const variable = `{${eventTypeVariables[key]}}`
 
       const variableItem = `
         <a href="#" class="dropdown-item" title="${variable}">${key}</a>
       `
 
-      variables.forEach(varElmnt => varElemnt.appendChild(variableItem))
+      variables.forEach(varElmnt =>
+        varElmnt.insertAdjacentHTML('beforeEnd', variableItem),
+      )
     }
   }
 })
