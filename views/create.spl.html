@@ -116,7 +116,7 @@
 						<button disabled class="button is-small is-static" aria-haspopup="true" aria-controls="dropdown-menu">
 							<span>Add variable</span>
 							<span class="icon is-small">
-								<i class="fas fa-angle-down" aria-hidden="true"></i>
+								<i class="fas fa-angle-up" aria-hidden="true"></i>
 							</span>
 						</button>
 					</div>
