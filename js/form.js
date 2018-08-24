@@ -56,6 +56,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Vanilly implementaion of $().trigger
   eventType.dispatchEvent(new Event('change'))
+
+  $('.variables.variables-url').on('click', function(e) {
+    e.preventDefault()
+
+    if (
+      !e.target.classList.contains('dropdown-item') ||
+      e.target.classList.contains('notVariable')
+    ) {
+      return
+    }
+
+    document.getElementById('url').value += e.target.getAttribute('title')
+  })
+  ;[...document.querySelectorAll('.variables.variables-body')].forEach(el =>
+    el.addEventListener('click', e => {
+      e.preventDefault()
+
+      if (
+        !e.target.classList.contains('dropdown-item') ||
+        e.target.classList.contains('notVariable')
+      ) {
+        return
+      }
+      document
+        .getElementById('body')
+        .appendChild(document.createTextNode(e.target.getAttribute('title')))
+    }),
+  )
 })
 
 // Use native event listeners
@@ -68,6 +96,13 @@ eventType.addEventListener('change', event => {
   // Vanilla $().empty
   const additionalFields = document.getElementById('additionalFields')
   additionalFields.innerHTML = ''
+
+  const variables = [...document.querySelectorAll('.variables')]
+
+  variables.forEach(varElmnt => {
+    varElmnt.innerHTML =
+      '<div class="notVariable dropdown-item has-text-grey">None</div>'
+  })
 
   // Use Array.prototype.includes
   if (Object.keys(eventTypes).includes(eventType)) {
@@ -101,7 +136,7 @@ eventType.addEventListener('change', event => {
                 placeholder="${data.placeholder}"
               >
               <span class="icon is-small is-left has-text-white">
-                <i class="fas fa-${data - icon}></i>
+                <i class="fas fa-${data.icon}></i>
               </span>
             </div>
             <p class="help ${data.error ? 'is-danger' : ''}">${data.help}</p>
@@ -110,7 +145,26 @@ eventType.addEventListener('change', event => {
       </div>
       `
 
-      additionalFields.insertAdjacentHTML('beforeend', newField)
+      additionalFields.insertAdjacentHTML('', newField)
+    }
+
+    if (Object.keys(eventTypes[eventType].variables).length > 0) {
+      // Replace jQuery with Array forEach
+      variables.forEach(el => {
+        el.innerHTML = ''
+      })
+    }
+
+    // Use let over var
+    for (let key in eventTypes[eventType].variables) {
+      // Use template strings
+      const variable = `{${eventTypes[eventType].variables[key]}}`
+
+      const variableItem = `
+        <a href="#" class="dropdown-item" title="${variable}">${key}</a>
+      `
+
+      variables.forEach(varElmnt => varElemnt.appendChild(variableItem))
     }
   }
 })
