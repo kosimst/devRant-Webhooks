@@ -191,7 +191,7 @@
 			}
 		});
 
-		document.querySelectorAll('.notification.delete').forEach(el => el.addEventListener('click', function () {
+		[...document.querySelectorAll('.notification.delete')].forEach(el => el.addEventListener('click', function () {
 			this.parentNode.remove();
 		}));
 
