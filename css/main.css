@@ -29,6 +29,10 @@ body {
 	font-family: 'Comfortaa', sans-serif;
 }
 
+.header-title {
+	color: #fff !important;
+}
+
 .page-content {
 	background-color: #40415a !important;
 	color:            #fff !important;
