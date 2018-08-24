@@ -91,19 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Vanilly implementaion of $().trigger
   eventTypeElement.dispatchEvent(new Event('change'))
+  ;[...document.querySelectorAll('.variables.variables-url')].forEach(el =>
+    el.addEventListener('click', e => {
+      e.preventDefault()
 
-  $('.variables.variables-url').on('click', function(e) {
-    e.preventDefault()
+      if (
+        !e.target.classList.contains('dropdown-item') ||
+        e.target.classList.contains('notVariable')
+      ) {
+        return
+      }
 
-    if (
-      !e.target.classList.contains('dropdown-item') ||
-      e.target.classList.contains('notVariable')
-    ) {
-      return
-    }
-
-    document.getElementById('url').value += e.target.getAttribute('title')
-  })
+      document.getElementById('url').value += e.target.getAttribute('title')
+    }),
+  )
   ;[...document.querySelectorAll('.variables.variables-body')].forEach(el =>
     el.addEventListener('click', e => {
       e.preventDefault()
@@ -167,7 +168,7 @@ eventTypeElement.addEventListener('change', () => {
                 placeholder="${data.placeholder}"
               >
               <span class="icon is-small is-left has-text-white">
-                <i class="fas fa-${data.icon}"></i>
+                <i class="fas fa-${data.icon}></i>
               </span>
             </div>
             <p class="help ${data.error ? 'is-danger' : ''}">${data.help}</p>
