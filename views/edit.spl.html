@@ -11,9 +11,7 @@
 			{/foreach}
 		</ul>
 	</div>
-	{/if}
-
-	{if(isset($success) && $success)}
+	{/if} {if(isset($success) && $success)}
 	<div class="notification is-success content" id="success">
 		<button class="delete has-text-black"></button>
 		Successfully updated webhook!
@@ -67,10 +65,11 @@
 
 			</label>
 			<div class="control has-icons-left">
-				<input required id="url" name="url" value="{if(isset($form['url']))} {$form['url']} {/if}" class="input {if(isset($errors['url']))} is-danger {/if}" type="url" placeholder="URL ...">
+				<input required id="url" name="url" value="{if(isset($form['url']))} {$form['url']} {/if}" class="input {if(isset($errors['url']))} is-danger {/if}"
+				 type="url" placeholder="URL ...">
 				<span class="icon is-small is-left has-text-white">
 					<i class="fas fa-globe"></i>
-			    </span>
+				</span>
 			</div>
 
 			{if(isset($errors['url']))}
@@ -181,21 +180,21 @@
 	</form>
 
 	<script type="text/javascript">
-		var errors = {@echo json_encode($errors)};
-		var previousForm = {@echo json_encode($form)};
+		const errors = {@echo json_encode($errors)};
+		const previousForm = {@echo json_encode($form)};
 
-		$('#delete').on('click', function () {
-			var confirmed = confirm('Are you sure?');
+		document.getElementById('delete').addEventListener('click', () => {
+			const confirmed = confirm('Are you sure?');
 
-			if(confirmed) {
+			if (confirmed) {
 				location.href = '/edit/delete?key={$key}';
 			}
 		});
 
-		$('.notification .delete').on('click', function() {
+		document.querySelectorAll('.notification.delete').forEach(el => el.addEventListener('click', function () {
 			this.parentNode.remove();
-		});
+		}));
 
-		{include "js/form.js"}
+		{ include "js/form.js" }
 	</script>
 </section>
